@@ -8,17 +8,19 @@ import Logout from "./components/Logout";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const [isAuth, setIsAuth] = React.useState(false);
-
+  const [isAuth, setIsAuth] = React.useState(localStorage.getItem("isAuth"));
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar isAuth={isAuth} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/createpost" element={<CreatePost />} />
-          <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-          <Route path="/logout" element={<Logout />} />
+          {!isAuth ? (
+            <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
+          ) : (
+            <Route path="/logout" element={<Logout setIsAuth={setIsAuth} />} />
+          )}
         </Routes>
       </Router>
     </div>
