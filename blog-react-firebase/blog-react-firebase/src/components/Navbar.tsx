@@ -1,13 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+interface NavbarProps {
+  isAuth: boolean;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
   return (
     <nav>
       <Link to="/">Home</Link>
-      <Link to="/createpost">Create Post</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/logout">Logout</Link>
+      {!isAuth ? (
+        <Link to="/login">Login</Link>
+      ) : (
+        <>
+          <Link to="/createpost">Create Post</Link>
+          <Link to="/logout">Logout</Link>
+        </>
+      )}
     </nav>
   );
 };
